@@ -3,7 +3,7 @@ const app= express()
 
 const mongoose=require("mongoose")
 mongoose.connect("mongodb+srv://Mohamad:96MoAl96@cluster0.wujtyez.mongodb.net/mernproject?retryWrites=true&w=majority")
-
+tz
 
 app.get("/",(req, res)=>{
     res.send("test")
