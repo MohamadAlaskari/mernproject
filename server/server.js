@@ -8,7 +8,7 @@ app.use(cors());
 //wir keine leere data in consol.log() bei req.data in app.js  
 app.use(express.json())
 
-
+ 
 
 // connect to DB
 const username = process.env.USERNAME,

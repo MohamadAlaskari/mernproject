@@ -1,9 +1,12 @@
+
+
 import { useState, useEffect } from "react"
 import Axios from "axios"
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Navbar, Form, Button, ListGroup, Badge } from 'react-bootstrap';
+
 
 
 export default function App() {
@@ -13,6 +16,7 @@ export default function App() {
   const [name, setName] = useState("")
   const [age, setAge] = useState("")
   const [email, setEmail] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
 
 
   useEffect(() => {
@@ -38,6 +42,19 @@ export default function App() {
 
   }
 
+
+  //search
+  const searchUser = () => {
+    Axios.get(`${api}/users`)
+      .then(res => {
+        const filteredUsers = res.data.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        setUsers(filteredUsers)
+      })
+      .catch(error => {
+        // handle error
+      });
+  }
+  const filteredUsers = users.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
   /*
     const users = [
       { "_id": "64116c6dcb92f1bd10a08538", "name": "Mo", "age": 27, "email": "m_alaskari96@hotmail.com" },
@@ -48,48 +65,80 @@ export default function App() {
 
 
   return (
-    <Container>
 
+    <Container fluid className="main bg-dark main">
+      <Container>
+        <Navbar variant="dark" className="mb-4">
+            <Navbar.Brand href="#home" className="brand fw-bold text-success">
+              MERN
+            </Navbar.Brand>
+           
+        </Navbar>
 
-      {users.map(user => {
-        return (
-          <div className="card" key={user._id} >
-            <ul>
-              <li>Name: {user.name}</li>
-              <li>Age: {user.age}</li>
-              <li>Email: {user.email}</li>
-            </ul>
+        <div className="row">
+          <div className="col col-3">
+       
+            
+            <Form className="form border border-success rounded-3 p-3">
+              <Form.Control type="text" placeholder="Enter name" onChange={e => setName(e.target.value)} />
+              <Form.Control type="number" placeholder="Enter age" onChange={e => setAge(e.target.value)} />
+              <Form.Control type="email" placeholder="Enter your email" onChange={e => setEmail(e.target.value)} />
+              <Button className="mt-2 btn" variant="success" type="submit" onClick={createUser}>
+                Create User
+              </Button>
+            </Form>
+        
+          
 
           </div>
-        )
-      })}
-      <div>
-        <input type="text" placeholder="Name" onChange={e => setName(e.target.value)} />
-        <input type="" number placeholder="Age" onChange={e => setAge(e.target.value)} />
-        <input type="text" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-        <button onClick={createUser}>Creat User</button>
-      </div>
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail" >
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+          <div className="col col-6 center">
+            <div>
+          <Form className="d-flex border border-success rounded-3 p-3 ">
+              <Form.Control
+                type="search"
+                placeholder="Search User"
+                className=" me-auto"
+                aria-label="Search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </Form>
+            </div>
+            <div className="result border border-success rounded-3 p-3">
+            {filteredUsers.map(user => {
+              return (
+
+                <ListGroup key={user._id}>
+                  <ListGroup.Item
+                    as="li"
+                    className="d-flex justify-content-between align-items-start"
+                  >
+                    <div className="ms-2 me-auto">
+                      <div className="fw-bold">{user.name}</div>
+                      <div> {user.email}</div>
+                    </div>
+
+                    <Badge bg="success" pill>
+                      {user.age}
+                    </Badge>
+                  </ListGroup.Item>
+                </ListGroup>
+              )
+            })}
+            </div>
+          </div >
+          <div className="col col-3 result">
+      
+          
+          </div>
+        </div>
+
+
+      </Container>
     </Container>
+
+
   );
 }
 
