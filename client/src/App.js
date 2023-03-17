@@ -18,15 +18,16 @@ export default function App() {
   const [email, setEmail] = useState("")
   const [searchTerm, setSearchTerm] = useState("");
 
-
+//users query  get
   useEffect(() => {
     Axios.get(`${api}/users`)
       .then(res => { setUsers(res.data) })
       .catch(error => {
-        // handle error
+        console.log(error)
       });
   }, [users])
 
+  //user erstellen post
   const createUser = () => {
     if (name && age && email) {
       Axios.post(`${api}/createUser`, {
@@ -40,7 +41,7 @@ export default function App() {
         });
     }
   }
-  // Handler zum Löschen des Benutzers
+  //user Löschen delete
   const deleteUser = (id) => {
     Axios.delete(`${api}/deleteUser/${id}`)
       .then((res) => {
@@ -54,7 +55,7 @@ export default function App() {
   };
 
 
-  //search
+  //user search
   const filteredUsers = users.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
   /* const searchUser = () => {
