@@ -15,9 +15,7 @@ const username = process.env.USERNAME,
     password = process.env.PASSWORD,
     database = process.env.DATABASE;
 const mongoose = require("mongoose")
-//mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.wujtyez.mongodb.net/${database}?retryWrites=true&w=majority`)
-mongoose.connect(`mongodb+srv://Mohamad:96MoAl96@cluster0.wujtyez.mongodb.net/mernprojct?retryWrites=true&w=majority`)
-
+mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.wujtyez.mongodb.net/${database}?retryWrites=true&w=majority`)
     .then(() => {
         console.log('MongoDB-Verbindung erfolgreich hergestellt!');
     }).catch(err => {
