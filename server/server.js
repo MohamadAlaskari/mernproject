@@ -8,14 +8,19 @@ app.use(cors());
 //wir keine leere data in consol.log() bei req.data in app.js  
 app.use(express.json())
 
- 
 
-// connect to DB
+
+// connect to MongoDB
 const username = process.env.USERNAME,
     password = process.env.PASSWORD,
     database = process.env.DATABASE;
 const mongoose = require("mongoose")
 mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.wujtyez.mongodb.net/${database}?retryWrites=true&w=majority`)
+    .then(() => {
+        console.log('MongoDB-Verbindung erfolgreich hergestellt!');
+    }).catch(err => {
+        console.error('Fehler beim Herstellen der MongoDB-Verbindung:', err);
+    });
 
 /*Models*/
 // import UserModel
@@ -40,7 +45,7 @@ app.delete("/deleteUser/:id", async (req, res) => {
     const { id } = req.params;
     await UserModel.findByIdAndDelete(id);
     res.json({ message: "User deleted successfully" });
-  });
+});
 
 // creat port
 const _port = "3001"
