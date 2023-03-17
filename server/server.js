@@ -35,6 +35,12 @@ app.post("/createUser", async (req, res) => {
     res.json(req.body)
 })
 
+// delete request
+app.delete("/deleteUser/:id", async (req, res) => {
+    const { id } = req.params;
+    await UserModel.findByIdAndDelete(id);
+    res.json({ message: "User deleted successfully" });
+  });
 
 // creat port
 const _port = "3001"

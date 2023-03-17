@@ -39,22 +39,35 @@ export default function App() {
           // handle error
         });
     }
-
   }
+  // Handler zum Löschen des Benutzers
+  const deleteUser = (id) => {
+    Axios.delete(`${api}/deleteUser/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        const updatedUsers = users.filter((user) => user._id !== id);
+        setUsers(updatedUsers);
+      })
+      .catch((error) => {
+        // handle error
+      });
+  };
 
 
   //search
-  const searchUser = () => {
-    Axios.get(`${api}/users`)
-      .then(res => {
-        const filteredUsers = res.data.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
-        setUsers(filteredUsers)
-      })
-      .catch(error => {
-        // handle error
-      });
-  }
   const filteredUsers = users.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+  /* const searchUser = () => {
+     Axios.get(`${api}/users`)
+       .then(res => {
+         const filteredUsers = res.data.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+         setUsers(filteredUsers)
+       })
+       .catch(error => {
+         // handle error
+       });
+   }
+   */
   /*
     const users = [
       { "_id": "64116c6dcb92f1bd10a08538", "name": "Mo", "age": 27, "email": "m_alaskari96@hotmail.com" },
@@ -69,16 +82,16 @@ export default function App() {
     <Container fluid className="main bg-dark main">
       <Container>
         <Navbar variant="dark" className="mb-4">
-            <Navbar.Brand href="#home" className="brand fw-bold text-success">
-              MERN
-            </Navbar.Brand>
-           
+          <Navbar.Brand href="#home" className="brand fw-bold text-success">
+            MERN
+          </Navbar.Brand>
+
         </Navbar>
 
         <div className="row">
           <div className="col col-3">
-       
-            
+
+
             <Form className="form border border-success rounded-3 p-3">
               <Form.Control type="text" placeholder="Enter name" onChange={e => setName(e.target.value)} />
               <Form.Control type="number" placeholder="Enter age" onChange={e => setAge(e.target.value)} />
@@ -87,50 +100,56 @@ export default function App() {
                 Create User
               </Button>
             </Form>
-        
-          
+
+
 
           </div>
 
           <div className="col col-6 center">
             <div>
-          <Form className="d-flex border border-success rounded-3 p-3 ">
-              <Form.Control
-                type="search"
-                placeholder="Search User"
-                className=" me-auto"
-                aria-label="Search"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </Form>
+              <Form className="d-flex border border-success rounded-3 p-3 ">
+                <Form.Control
+                  type="search"
+                  placeholder="Search User"
+                  className=" me-auto"
+                  aria-label="Search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </Form>
             </div>
             <div className="result border border-success rounded-3 p-3">
-            {filteredUsers.map(user => {
-              return (
+              {filteredUsers.map(user => {
+                return (
 
-                <ListGroup key={user._id}>
-                  <ListGroup.Item
-                    as="li"
-                    className="d-flex justify-content-between align-items-start"
-                  >
-                    <div className="ms-2 me-auto">
-                      <div className="fw-bold">{user.name}</div>
-                      <div> {user.email}</div>
-                    </div>
+                  <ListGroup key={user._id}>
+                    <ListGroup.Item
+                      as="li"
+                      className="d-flex justify-content-between align-items-start"
+                    >
+                      <div className="ms-2 me-auto">
+                        <div className="fw-bold">{user.name}
+                        </div>
+                        <div> {user.email}</div>
+                      </div>
 
-                    <Badge bg="success" pill>
-                      {user.age}
-                    </Badge>
-                  </ListGroup.Item>
-                </ListGroup>
-              )
-            })}
+
+                      <Button
+                        variant="danger"
+                        className="mx-2"
+                        onClick={() => deleteUser(user._id)}
+                      >
+                        Delete
+                      </Button>
+                    </ListGroup.Item>
+                  </ListGroup>
+                )
+              })}
             </div>
           </div >
           <div className="col col-3 result">
-      
-          
+
+
           </div>
         </div>
 
