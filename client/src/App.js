@@ -120,7 +120,7 @@ export default function App() {
 
         <div className="row">
           <div className="col-lg-3 col-md-4 col-sm-12">
-            <Form className={`form border border-success rounded-3 p-3 ${showBearbeitenForm ? "d-none" : ""
+            <Form className={`form border border-success rounded-3 p-3 mb-3 ${showBearbeitenForm ? "d-none" : ""
               }`}>
               <Form.Control
                 type="text"
@@ -147,7 +147,7 @@ export default function App() {
               </Button>
             </Form>
             <Form
-              className={`form border border-success rounded-3 p-3 ${showBearbeitenForm ? "" : "d-none"
+              className={`form border border-success rounded-3 p-3 mb-3 ${showBearbeitenForm ? "" : "d-none"
                 }`}
             >
               <Form.Control
