@@ -1,6 +1,5 @@
-body,
 .main {
-    height: 100vh;
+    height: max-content;
 }
 
 .brand {
@@ -16,7 +15,7 @@ body,
 }
 
 .result {
-    height: calc(100vh - 30vh);
+    height: calc(100vh - 29.4vh);
     overflow-y: scroll;
 
 }
