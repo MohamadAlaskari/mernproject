@@ -29,7 +29,7 @@ const UserModel = require('./models/Users')
 // get request
 app.get("/users", async (req, res) => {
     const users = await UserModel.find();
-    res.json(users)
+    res.status(200).json(users)
 })
 
 // post request create user
@@ -50,5 +50,5 @@ app.delete("/deleteUser/:id", async (req, res) => {
 // creat port
 const _port = "3001"
 app.listen(_port, () => {
-    console.log("Server Work")
+    console.log(`Server Work!, Server started on port ${_port}`)
 })
