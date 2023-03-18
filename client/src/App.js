@@ -18,10 +18,13 @@ export default function App() {
   const [email, setEmail] = useState("")
   const [searchTerm, setSearchTerm] = useState("");
 
-//users query  get
+  //users query  get
   useEffect(() => {
     Axios.get(`${api}/users`)
-      .then(res => { setUsers(res.data) })
+      .then(res => {
+        setUsers(res.data)
+      })
+
       .catch(error => {
         console.log(error)
       });
@@ -35,22 +38,26 @@ export default function App() {
         age: age,
         email: email
       })
-        .then(res => { console.log(res.data) })
+        .then(res => { alert(res.data.message) })
         .catch(error => {
           // handle error
-        });
+          console.log(error)
+        })
     }
   }
   //user Löschen delete
   const deleteUser = (id) => {
     Axios.delete(`${api}/deleteUser/${id}`)
       .then((res) => {
-        console.log(res.data);
-        const updatedUsers = users.filter((user) => user._id !== id);
-        setUsers(updatedUsers);
+        /*
+       /*   const updatedUsers = users.filter((user) => user._id !== id);
+      /* setUsers(updatedUsers);
+    */
+        alert(res.data.message)
       })
       .catch((error) => {
         // handle error
+        console.log(error)
       });
   };
 
@@ -58,17 +65,6 @@ export default function App() {
   //user search
   const filteredUsers = users.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-  /* const searchUser = () => {
-     Axios.get(`${api}/users`)
-       .then(res => {
-         const filteredUsers = res.data.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
-         setUsers(filteredUsers)
-       })
-       .catch(error => {
-         // handle error
-       });
-   }
-   */
   /*
     const users = [
       { "_id": "64116c6dcb92f1bd10a08538", "name": "Mo", "age": 27, "email": "m_alaskari96@hotmail.com" },
@@ -120,7 +116,7 @@ export default function App() {
               </Form>
             </div>
             <div className="result border border-success rounded-3 p-3">
-              {filteredUsers.map(user => {
+              {filteredUsers.map((user) => {
                 return (
 
                   <ListGroup key={user._id}>

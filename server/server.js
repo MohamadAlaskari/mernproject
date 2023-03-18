@@ -34,18 +34,27 @@ app.get("/users", async (req, res) => {
 
 // post request create user
 app.post("/createUser", async (req, res) => {
-    const user = req.body;
-    const newUser = new UserModel(user);
-    await newUser.save();
-    res.json(req.body)
+    const user = req.body
+    const newUser = new UserModel(user)
+    await newUser.save()
+    res.json({ message: "User created successfully" })
 })
+
 
 // delete request
 app.delete("/deleteUser/:id", async (req, res) => {
     const { id } = req.params;
-    await UserModel.findByIdAndDelete(id);
-    res.json({ message: "User deleted successfully" });
-});
+    await UserModel.findByIdAndDelete(id)
+    res.json({ message: "User deleted successfully" })
+})
+
+// put request update user by id
+app.put("/updateUser/:id", async (req, res) => {
+    const { id } = req.params
+    const user = req.body
+    await UserModel.findByIdAndUpdate(id, user)
+    res.json({ message: "User updated successfully" })
+})
 
 // creat port
 const _port = "3001"
