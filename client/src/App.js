@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
-
 import "./App.css";
+
+//component
+import Navbarc from "./component/navbar/Navbarc";
+
+// react bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Navbar, Form, Button, ListGroup } from "react-bootstrap";
+import { Container, Form, Button, ListGroup } from "react-bootstrap";
+
 //react-icons
-import { SiMongodb, SiExpress, SiReact, SiNodedotjs } from "react-icons/si";
 import { BsFillPersonFill } from "react-icons/bs";
-import { HiMail } from "react-icons/hi";
 import { FaBirthdayCake } from "react-icons/fa";
+import { HiMail } from "react-icons/hi";
 import { BsPencilSquare, BsTrash } from "react-icons/bs";
 
 export default function App() {
@@ -107,21 +111,15 @@ export default function App() {
   return (
     <Container fluid className="pb-4 bg-dark main">
       <Container>
-        <Navbar variant="dark" className="mb-4">
-          <Navbar.Brand href="#home" className="brand fw-bold text-success">
-            <h1>
-              <SiMongodb />
-              <SiExpress className="ms-1" />
-              <SiReact className="ms-1" />
-              <SiNodedotjs className="mx-2 ms-1" />
-            </h1>
-          </Navbar.Brand>
-        </Navbar>
-
+        <Navbarc />
         <div className="row">
           <div className="col-lg-3 col-md-4 col-sm-12">
-            <Form className={`form border border-success rounded-3 p-3 mb-3 ${showBearbeitenForm ? "d-none" : ""
-              }`}>
+            <Form
+              className={`form border border-success rounded-3 p-3 mb-3 ${showBearbeitenForm ? "d-none" : ""
+                }`}
+            >
+              {" "}
+              <h6>Create User</h6>
               <Form.Control
                 type="text"
                 placeholder="Enter name"
@@ -150,6 +148,8 @@ export default function App() {
               className={`form border border-success rounded-3 p-3 mb-3 ${showBearbeitenForm ? "" : "d-none"
                 }`}
             >
+              {" "}
+              <h6>Change User</h6>
               <Form.Control
                 type="text"
                 placeholder={name}
@@ -200,6 +200,7 @@ export default function App() {
             </div>
             <div className="result border border-success rounded-3 p-3">
               {filteredUsers.map((user) => (
+
                 <ListGroup key={user._id}>
                   <ListGroup.Item
                     as="li"
