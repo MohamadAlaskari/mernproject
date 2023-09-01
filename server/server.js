@@ -1,6 +1,12 @@
 // creat server
 const express = require("express")
 const app = express()
+// creat port
+const _port = "3001"
+app.listen(_port, () => {
+    console.log(`Server Work!, Server started on port ${_port}`)
+})
+
 // Allow cross-origin requests
 const cors = require("cors")
 app.use(cors());
@@ -11,10 +17,10 @@ app.use(express.json())
 
 
 // connect to MongoDB
+const mongoose = require("mongoose")
 const username = process.env.USERNAME,
     password = process.env.PASSWORD,
     database = process.env.DATABASE;
-const mongoose = require("mongoose")
 mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.wujtyez.mongodb.net/${database}?retryWrites=true&w=majority`)
     .then(() => {
         console.log('MongoDB-Verbindung erfolgreich hergestellt!');
@@ -56,8 +62,3 @@ app.put("/updateUser/:id", async (req, res) => {
     res.json({ message: "User updated successfully" })
 })
 
-// creat port
-const _port = "3001"
-app.listen(_port, () => {
-    console.log(`Server Work!, Server started on port ${_port}`)
-})
